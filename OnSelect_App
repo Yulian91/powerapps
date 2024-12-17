@@ -1,0 +1,166 @@
+// NAVEGAR EN LOS SIGUIENTES FORMULARIOS // 
+Switch(
+    containerSeleccionado;
+    "ContainerForm1";
+    UpdateContext({containerSeleccionado: "ContainerForm2"}) And If(
+        ComBoxCategoría.Selected.Value = "Operacional";
+        Set(
+            ModalPopUpCambiosOp;
+            true
+        );
+        false
+    );
+    "ContainerForm2";
+    UpdateContext({containerSeleccionado: "ContainerForm3"});
+    "ContainerForm3";
+    If(
+        Or(
+            IsBlank(ComboBoxPaís.Selected.Value);
+            IsBlank(ComBoxTipCambio.Selected.Value);
+            IsBlank(ComBoxCategoría.Selected.Value);
+            IsBlank(ComBoxActivo.Selected.Value);
+            IsBlank(ComBoxUbicacionInst.Selected.Value);
+            IsBlank(ComBoxPermanencia.Selected.Value);
+            IsBlank(ComBoxProceso.Selected.Value);
+            IsBlank(TxtInputCostoCambio.Text);
+            IsBlank(TxtInputRazonesCambio.Text);
+            IsBlank(TxtInputDescrpCambio.Text);
+            IsBlank(TxtInputEspecificaciónObj.Text)
+        );
+        Notify(
+            "EXISTEN CAMPOS OBLIGATORIOS SIN LLENAR, REVISE SI TODOS LOS CAMPOS ESTA DILIGENCIADOS";
+            NotificationType.Error;
+            5000
+        );
+        UpdateContext(
+            {
+                IdSolicitudesMoC: Patch(
+                    'Solicitudes MoC';
+                    Defaults('Solicitudes MoC');
+                    {
+                        País: LookUp(
+                            Países;
+                            ComboBoxPaís.Selected.Value = Nombre
+                        );
+                        Proceso: ComBoxProceso.Selected.Value;
+                        Permanencia: ComBoxPermanencia.Selected.Value;
+                        'Locación/Instalación': ComBoxUbicacionInst.Selected.Value;
+                        'Otra Locación/Instalación': TextInputOtraLoc.Text;
+                        Activo: ComBoxActivo.Selected.Value;
+                        'Categoría del cambio': ComBoxCategoría.Selected.Value;
+                        'Tipo de cambio': ComBoxTipCambio.Selected.Value;
+                        'Especificación objeto del cambio': TxtInputEspecificaciónObj.Text;
+                        'Descripción del cambio': TxtInputDescrpCambio.Text;
+                        'Razones y bases técnicas': TxtInputRazonesCambio.Text;
+                        'Costos aprox del cambio': Value(TxtInputCostoCambio.Text);
+                        'Origen del cambio': TxtInputOrigenCambio.Text;
+                        'Beneficios de implementar': TxtInputBeneficiosImp.Text;
+                        'Elementos requeridos': TxtInputElementosReq.Text;
+                        'Documentación requerida': ComBoxDocumentosReq.Selected.Value;
+                        'Otros Documentos Requeridos': TxtInputDocumentosReq.Text;
+                        'Requiere un gestor': CheckboxGestor.Value;
+                        Gestor: ComBoxNombreGestor.Selected
+                    }
+                )
+            }
+        );;
+        'AprobacionesTeamsApprovalsMOC-Gestor'.Run(
+        //País
+        User().Email;
+        //Proceso
+        ComBoxProceso.Selected.Value;
+        //Permanencia
+        ComBoxPermanencia.Selected.Value;
+        //Locación/Instalación
+        ComBoxUbicacionInst.Selected.Value;
+        //Activo
+        ComBoxActivo.Selected.Value;
+        //Categoría
+        ComBoxCategoría.Selected.Value;
+        //Tipo
+        ComBoxTipCambio.Selected.Value;
+        //Origen del cambio
+        TxtInputOrigenCambio.Text;
+        //Elementos/Recursos requeridos
+        TxtInputElementosReq.Text;
+        //Beneficios
+        TxtInputBeneficiosImp.Text;
+        //Documentación requerida
+        ComBoxDocumentosReq.Selected.Value;
+        //Título
+        TxtInputEspecificaciónObj.Text;
+        //Descripción
+        TxtInputDescrpCambio.Text;
+        //Costo apróximado
+        TxtInputCostoCambio.Text;
+        //Razones y bases técnicas
+        TxtInputRazonesCambio.Text;
+        //Nombre gestor
+        ComBoxNombreGestor.Selected.'Nombre completo';
+        //Correo gestor
+        TxtInputCorreoGestor.Text;
+        //Nombre revisor
+        TitleNombreRev.Text;
+        //Correo revisor
+        TitleCorreoRev.Text;
+        //Código solicitud
+        IdSolicitudesMoC.Código
+        );;
+        
+        AgregarRevisoresMoC.Run(
+            IdSolicitudesMoC.'Solicitudes MoC';
+            JSON(CollAñadirRevisors)
+        );;
+        Notify(
+            "LA SOLICITUD No. " & IdSolicitudesMoC.Código & " FUE RADICADA CORRECTAMENTE";
+            NotificationType.Success;
+            5000
+        );;
+        Patch(
+            'Trazabilidad MoC';
+            Defaults('Trazabilidad MoC');
+            {
+                'Solicitud MoC': IdSolicitudesMoC;
+                'Tipo Evento': "Radicado";
+                Detalle: "Solicitud Radicada por el Usuario"
+            }
+        );;
+        UpdateContext({containerSeleccionado: "ContainerForm1"});;
+        Refresh('Solicitudes MoC');;
+        Refresh('Revisores MoC');;
+        Refresh('Trazabilidad MoC');;
+        Reset(ComboBoxPaís);;
+        Reset(ComBoxActivo);;
+        Reset(ComBoxCategoría);;
+        Reset(ComBoxNombreGestor);;
+        Reset(ComBoxNombreRev);;
+        Reset(ComBoxPermanencia);;
+        Reset(ComBoxProceso);;
+        Reset(ComBoxTipCambio);;
+        Reset(ComBoxUbicacionInst);;
+        Reset(TxtInputCorreoGestor);;
+        Reset(TxtInputCorreoRev);;
+        Reset(TxtInputCostoCambio);;
+        Reset(TxtInputDescrpCambio);;
+        Reset(TxtInputEspecificaciónObj);;
+        Reset(TxtInputRazonesCambio);;
+        Reset(TxtInputOrigenCambio);;
+        Reset(TxtInputBeneficiosImp);;
+        Reset(TxtInputElementosReq);;
+        Reset(ComBoxDocumentosReq);;
+        Reset(CheckboxGestor);;
+        Reset(TextInputOtraLoc);;
+        Reset(GalleryDataRevisores);;
+        RemoveIf(CollAñadirRevisors;true)
+    )
+)
+
+// BOTON ATRAS - NAVEGAR HACIA EL FORMULARIO ANTERIOR //
+Switch(
+    containerSeleccionado;
+    "ContainerForm3";
+    UpdateContext({containerSeleccionado: "ContainerForm2"});
+    "ContainerForm2";
+    UpdateContext({containerSeleccionado: "ContainerForm1"});
+    "ContainerForm1"
+)
