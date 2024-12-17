@@ -1,0 +1,34 @@
+If(
+    Not(
+        EndsWith(
+            First(Self.Attachments).Name;
+            ".pdf"
+        )
+    ) And Not(
+        EndsWith(
+            First(Self.Attachments).Name;
+            ".docx"
+        )
+    ) And Not(
+        EndsWith(
+            First(Self.Attachments).Name;
+            ".xlsx"
+        )
+    ) And Not(
+        EndsWith(
+            First(Self.Attachments).Name;
+            ".png"
+        )
+    ) And Not(
+        EndsWith(
+            First(Self.Attachments).Name;
+            ".jpeg"
+        )
+    );
+    Notify(
+        "ERROR AL CARGAR ARCHIVO, SOLO SE PUEDE CARGAR ARCHIVOS CON EXTENSIÓN PDF, WORD, EXCEL, PNG, JPEG";
+        NotificationType.Error;
+        4000
+    );;
+    Reset(Self)
+)
