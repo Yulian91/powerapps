@@ -1,0 +1,455 @@
+// Variable colores de frontera
+Set(
+    colorFrontera;
+    {
+        Fondo: ColorValue("#001871");
+        FondoTitulo: ColorValue("#63666A");
+        Alterno: ColorValue("#97999B");
+        Boton: ColorValue("#8fa73b");
+        BotonHover: ColorValue("#718138");
+        Negro: ColorValue("#222223");
+        Blanco: ColorValue("#ffffff");
+        rojoOscuro: ColorValue("#8b0000");
+        rojoClaro: ColorValue("#ff0000");
+        BotonDesactivado: ColorValue("#dcdcdc")
+    }
+);;
+// Variable tamaño de letra
+Set(
+    tamLetra;
+    {
+        TituloApp: 16;
+        Titulo: 15;
+        Boton: 13;
+        Subtitulo: 14
+    }
+);;
+//Variable que contiene el tipo de letra del texto
+Set(
+    _TipoLetraFrontera;
+    Font.Verdana
+);;
+// Variable del Item Seleccionado
+Set(
+    _varItemSeleccionado;
+    ""
+);;
+// Variable colores de asignar roles
+Set(
+    pinkColor;
+    RGBA(
+        227;
+        28;
+        121;
+        1
+    )
+);;
+Set(
+    blueColor;
+    RGBA(
+        0;
+        24;
+        113;
+        1
+    )
+);;
+// Variable que contiene el límite de los caracteres de la caja de texto
+Set(
+    maxCaracteres;
+    {
+        MaxLength5: 5;
+        MaxLength10: 10;
+        MaxLength20: 20;
+        MaxLength50: 50;
+        MaxLength100: 100
+    }
+);;
+// Variable que contiene la URL de los archivos cargados a SharePoint
+Set(
+    URLArchivosCO;
+    LookUp(
+        'Environment Variable Values';
+        'Environment Variable Definition'.'Schema Name' = "coem_CargarArchivosCO";
+        Value
+    )
+);;
+// Variable que contiene los datos del usuario logeado
+Set(
+    _DatosUsuario;
+    User()
+);;
+// Colección que contiene los datos de los usuarios activos de frontera
+ClearCollect(
+    collectUsuariosActivos;
+    Filter(
+        Usuarios;
+        Estado = 'Estado (Usuarios)'.Habilitado And "frontera" in 'Correo electrónico principal'
+    )
+);;
+// Colección que contiene los datos de las solicitudes
+ClearCollect(
+    collectSolicitudes;
+    Filter(
+        'CO-Solcitudes';
+        Estado = 'Estado (CO-Solcitudes)'.Activo
+    )
+);;
+// Colección que contiene los datos de los centros de costos
+ClearCollect(
+    collectCentrodeCostos;
+    Filter(
+        'Centros de costo - Cambios Organizacionales';
+        Estado = 'Estado (Centros de costo - Cambios Organizacionales)'.Activo
+    )
+);;
+// Colección que contiene los datos de las personas activas en SAP
+ClearCollect(
+    collectDatosSAP;
+    Filter(
+        VMO_ZHCM052;
+        Estado = 'Estado (VMO_ZHCM052)'.Activo And "frontera" in Correo_Corporativo
+    )
+);;
+// Colección que contiene los datos de los subordinados
+ClearCollect(
+    collectDatosSubordinados;
+    Filter('Subordinados - Cambios Organizacionales'; Estado = 'Estado (Subordinados - Cambios Organizacionales)'.Activo)
+);;
+// Colección que contiene los datos de las unidades organizativas
+ClearCollect(
+    collectUnidadesOrg;
+    Filter(
+        'Unidad Organizativa - Cambios Organizacionales';
+        Estado = 'Estado (Unidad Organizativa - Cambios Organizacionales)'.Activo
+    )
+);;
+Collect(
+    collectTipoContrato;
+    [
+        "INDEFINIDO";
+        "FIJO"
+    ]
+);;
+// Colección que contiene los tipo de salario
+Collect(
+    collectTipoSalario;
+    [
+        "Sueldo Básico";
+        "Salario Integral";
+        "Apoyo de Sostenimiento"
+    ]
+);;
+// Colección que contiene los turnos
+Collect(
+    collectTurnos;
+    [
+        "5 x 2";
+        "14 x 7";
+        "14 x 7 x 6";
+        "15 x 7 x 6";
+        "20 x 10";
+        "21 x 9"
+    ]
+);;
+// Colección que contiene los niveles de frontera
+Collect(
+    collectNivelFrontera;
+    [
+        "8 - ESTUDIANTE";
+        "A - AUXILIARY";
+        "B - TECHNICAL / ASSISTANT 4";
+        "C - TECHNICAL / ASSISTANT 3";
+        "D - TECHNICIAN / ASSISTANT 2";
+        "E - TECHNICIAN / ASSISTANT 1";
+        "F - PRESIDENT";
+        "G - PROFESSIONAL";
+        "H - PROFESSIONAL";
+        "I - SUPERVISOR / COORDINATOR";
+        "R - LEADER";
+        "S - SENIOR LEADER";
+        "T - MANAGER";
+        "U - MANAGER";
+        "V - SENIOR MANAGER";
+        "W - DIRECTOR";
+        "X - VICEPRESIDENT"
+    ]
+);;
+// Colección que contiene los tipo de solicitud
+Collect(
+    CollTipoSolicitud;
+    [
+        "Cambio de turno";
+        "Traslado Lugar de Trabajo";
+        "Cambio de reporte - layers";
+        "Reducción de salario";
+        "Cambio de Nivel";
+        "Promoción";
+        "Promoción por concurso interno";
+        "Nombramiento";
+        "Movimiento Horizontal";
+        "Incremento Salarial";
+        "Prórroga Contrato Término Fijo";
+        "Cambio A Término Indefinido";
+        "Cambio Denominación";
+        "Cambio descriptivo perfil del cargo";
+        "Cambio de personal a cargo";
+        "Otro sí Vehículo"
+    ]
+);;
+// Colección que contiene los CECO/AFE
+Collect(
+    collectCECO;
+    [
+        "A00812OPTH";
+        "A00811OPTH";
+        "A00815DTTH";
+        "A00816DTTH";
+        "A20103DTTH";
+        "E20200OPTH";
+        "E20201DTTH";
+        "E20211DTTH";
+        "E20220OPTH";
+        "E20221DTTH";
+        "E20230OPTH";
+        "E20231DTTH";
+        "E20240OPTH";
+        "E20241DTTH";
+        "E20251DTTH";
+        "E20400DTTH";
+        "E20400OPTH";
+        "E20410DTTH";
+        "E20410OPTH";
+        "E20420DTTH";
+        "E20420OPTH";
+        "E20430DTTH";
+        "E20440DTTH";
+        "E20440OPTH";
+        "FP-FT-1557/TIER";
+        "I20100OPTH";
+        "I20110DTTH";
+        "I20300DTTH";
+        "I20300OPTH";
+        "I20310DTTH";
+        "I20310OPTH";
+        "I20320DTTH";
+        "I20320OPTH";
+        "I20515DTTH";
+        "I20515OPTH";
+        "I20520DTTH";
+        "I20520OPTH";
+        "I20525DTTH";
+        "I20525OPTH";
+        "I20530DTTH";
+        "I20530OPTH";
+        "I20535DTTH";
+        "I20535OPTH";
+        "I20540DTTH";
+        "I20540OPTH";
+        "I20565DTTH";
+        "I20620DTTH";
+        "I20620OPTH";
+        "I20630DTTH";
+        "I20630OPTH";
+        "I20640DTTH";
+        "I20660DTTH";
+        "I20680DTTH";
+        "I20680OPTH";
+        "I20720TERM";
+        "I21300TERM";
+        "M22100CMTH";
+        "M22100COTH";
+        "M22100HSTH";
+        "M22100OPTH";
+        "M22100RHTH";
+        "M22100SETH";
+        "M22100THBS";
+        "M22120DTTH";
+        "M22120QFTH";
+        "M22150OPTH";
+        "M22155CJTH";
+        "M22155DTTH";
+        "M23000DTTH";
+        "M23000OPTH";
+        "M24000DTTH";
+        "M24000OPTH";
+        "M25000OPTH";
+        "M26000OPTH";
+        "M99996THTR";
+        "M99996THTT";
+        "MPGASTDIST";
+        "MPTHACT";
+        "MPTHAUD";
+        "MPTHCFO";
+        "MPTHCMP";
+        "MPTHCMR";
+        "MPTHCO&BE";
+        "MPTHCOMU";
+        "MPTHCOST";
+        "MPTHDE&BIE";
+        "MPTHDESAR";
+        "MPTHDIF";
+        "MPTHEXE";
+        "MPTHFIN";
+        "MPTHGCORP";
+        "MPTHHSE";
+        "MPTHIMPT";
+        "MPTHJOAS";
+        "MPTHJUR";
+        "MPTHOPE";
+        "MPTHPEG&A";
+        "MPTHPER";
+        "MPTHPLAN";
+        "MPTHPLPY";
+        "MPTHPPL";
+        "MPTHPROT";
+        "MPTHRLABO";
+        "MPTHRRH";
+        "MPTHRSO";
+        "MPTHRSOS";
+        "MPTHSGR";
+        "MPTHSIS";
+        "MPTHTES";
+        "MPTHTRANSP";
+        "MPTHTRCONT";
+        "MPTHUCORP";
+        "MPTHYAC";
+        "NE-FT-0001/NOMI";
+        "NF-FT-0002/NOMI";
+        "NF-FT-0005/NOMI";
+        "NO-FT-0001/NOMI";
+        "NO-FT-0004/NOMI";
+        "NP-FT-0003/NOMI";
+        "R20320DTTH";
+        "R20320OPTH";
+        "R20340DTTH";
+        "R20340OPTH";
+        "R20380DTTH";
+        "R20440DTTH";
+        "R20460DTTH";
+        "R20480DTTH";
+        "R20480OPTH";
+        "R20500DTTH";
+        "R20520DTTH";
+        "R20540DTTH";
+        "R20540OPTH";
+        "R20560DTTH";
+        "R20560OPTH";
+        "R20580DTTH";
+        "R20580OPTH";
+        "S20610TRTH";
+        "S20630MTTH";
+        "S20910DTTH"
+    ]
+);;
+// Variable base de datos de usuarios
+Set(
+    dataverseUser;
+    LookUp(
+        Usuarios;
+        'Correo electrónico principal' = _DatosUsuario.Email
+    )
+);;
+// Variable roles de seguridad segun el usuario
+Set(
+    adminUser;
+    !IsBlank(
+        LookUp(
+            dataverseUser.'Roles de seguridad (systemuserroles_association)';
+            Nombre = "Cambios Organizacionales - ADMINISTRADOR"
+        )
+    )
+);;
+Set(
+    userBusinessPartner;
+    !IsBlank(
+        LookUp(
+            dataverseUser.'Roles de seguridad (systemuserroles_association)';
+            Nombre = "Cambios Organizacionales - BUSINESS PARTNER"
+        )
+    )
+);;
+Set(
+    user;
+    !IsBlank(
+        LookUp(
+            dataverseUser.'Roles de seguridad (systemuserroles_association)';
+            Nombre = "Cambios Organizacionales - NOMINA"
+        )
+    )
+);;
+// Variable menu items
+Set(
+    _menuItems;
+    If(
+        adminUser = true;
+        Table(
+            {
+                MenuId: 1;
+                MenuLabel: "Inicio";
+                MenuIcon: Icon.Home;
+                MenuScreen: ScreenInicio
+            };
+            {
+                MenuId: 2;
+                MenuLabel: "Registro de Solicitud";
+                MenuIcon: Icon.DocumentWithContent;
+                MenuScreen: ScreenCrearSolicitud
+            };
+            {
+                MenuId: 3;
+                MenuLabel: "Ver Solicitudes";
+                MenuIcon: Icon.View;
+                MenuScreen: ScreenViewSolicitudes
+            };
+            {
+                MenuId: 4;
+                MenuLabel: "Configuración";
+                MenuIcon: Icon.Settings;
+                MenuScreen: ScreenConfiguracion
+            }
+        );
+        If(
+            userBusinessPartner = true;
+            Table(
+                {
+                    MenuId: 1;
+                    MenuLabel: "Inicio";
+                    MenuIcon: Icon.Home;
+                    MenuScreen: ScreenInicio
+                };
+                {
+                    MenuId: 2;
+                    MenuLabel: "Registro de Solicitud";
+                    MenuIcon: Icon.DocumentWithContent;
+                    MenuScreen: ScreenCrearSolicitud
+                };
+                {
+                    MenuId: 3;
+                    MenuLabel: "Ver Solicitudes";
+                    MenuIcon: Icon.View;
+                    MenuScreen: ScreenViewSolicitudes
+                }
+            )
+        );;
+        Table(
+            {
+                MenuId: 1;
+                MenuLabel: "Inicio";
+                MenuIcon: Icon.Home;
+                MenuScreen: ScreenInicio
+            };
+            {
+                MenuId: 2;
+                MenuLabel: "Registro de Solicitud";
+                MenuIcon: Icon.DocumentWithContent;
+                MenuScreen: ScreenCrearSolicitud
+            };
+            {
+                MenuId: 3;
+                MenuLabel: "Ver Solicitudes";
+                MenuIcon: Icon.View;
+                MenuScreen: ScreenViewSolicitudes
+            }
+        )
+    )
+);;
