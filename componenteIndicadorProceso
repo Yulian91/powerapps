@@ -1,0 +1,231 @@
+- ComponentIndicadorProceso:
+    Control: Component
+    Properties:
+      ColorActive: =_varColor.verdeClaro
+      ColorInactive: =ColorValue("#E0E0E0")
+      CurrentStage: |-
+        =If(
+            _DatosSolicitudGe.'Estado Solicitud' in "Radicada",
+            1,
+            If(
+                _DatosSolicitudGe.'Estado Solicitud' in "En Revisión",
+                2,
+                If(
+                    _DatosSolicitudGe.'Estado Solicitud' in "Revisado",
+                    3,
+                    If(
+                        _DatosSolicitudGe.'Estado Solicitud' in "Pendiente por aprobar",
+                        4,
+                        If(
+                            _DatosSolicitudGe.'Estado Solicitud' in "Aprobado",
+                            5,
+                            If(
+                                _DatosSolicitudGe.'Estado Solicitud' in "En Ejecución",
+                                6,
+                                If(
+                                    _DatosSolicitudGe.'Estado Solicitud' in "Cerrada",
+                                    7
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+      Items: |-
+        =Table(
+            {
+                ID: 1,
+                Title: "Radicada"
+            },
+            {
+                ID: 2,
+                Title: "En Revisión"
+            },
+            {
+                ID: 3,
+                Title: "Revisado"
+            },
+            {
+                ID: 4,
+                Title: "Pendiente por aprobar"
+            },
+            {
+                ID: 5,
+                Title: "Aprobado"
+            },
+            {
+                ID: 6,
+                Title: "En ejecución"
+            },
+            {
+                ID: 7,
+                Title: "MoC Cerrado"
+            }
+        )
+      TextColor: =ColorValue("#696969")
+      TextFont: ="Arial"
+      Height: =60
+      Width: =App.Width
+    Children:
+    - gall_cmp_BPFIndicator:
+        Control: Gallery
+        Variant: galleryHorizontal
+        Properties:
+          Items: =ComponentIndicadorProceso.Items
+          BorderColor: =RGBA(0, 18, 107, 1)
+          Height: =Parent.Height
+          ShowScrollbar: =false
+          TemplatePadding: =0
+          TemplateSize: =ComponentIndicadorProceso.Width / (CountRows(ComponentIndicadorProceso.Items))
+          Width: =ComponentIndicadorProceso.Width
+        Children:
+        - lbl_cmp_BPFIndicator_Gall:
+            Control: Label
+            Properties:
+              OnSelect: =Select(Parent)
+              Text: =ThisItem.Title
+              Align: =LayoutAlignItems.Center
+              BorderColor: =RGBA(0, 18, 107, 1)
+              Color: =ComponentIndicadorProceso.TextColor
+              Font: =ComponentIndicadorProceso.TextFont
+              Height: =Parent.TemplateHeight
+              PaddingTop: =25
+              Size: =12
+              Width: =Parent.TemplateWidth
+        - shp_cmp_BPFIndicator_Gall_Circle3:
+            Control: Circle
+            Properties:
+              OnSelect: =Select(Parent)
+              BorderColor: =RGBA(0, 18, 107, 1)
+              Fill: |-
+                =If(
+                    ThisItem.ID > ComponentIndicadorProceso.CurrentStage,
+                    ComponentIndicadorProceso.ColorInactive,
+                    ComponentIndicadorProceso.ColorActive
+                )
+              Height: =8
+              Visible: |-
+                =If(
+                    ThisItem.ID = ComponentIndicadorProceso.CurrentStage,
+                    true,
+                    false
+                )
+              Width: =8
+              X: =(Parent.TemplateWidth - Self.Width) / 2
+              Y: =shp_cmp_BPFIndicator_Gall_Circle1.Y + 6
+        - shp_cmp_BPFIndicator_Gall_Circle2:
+            Control: Circle
+            Properties:
+              OnSelect: =Select(Parent)
+              BorderColor: =RGBA(0, 18, 107, 1)
+              Fill: =Color.White
+              Height: =14
+              Visible: |-
+                =If(
+                    ThisItem.ID < ComponentIndicadorProceso.CurrentStage,
+                    false,
+                    true
+                )
+              Width: =14
+              X: =(Parent.TemplateWidth - Self.Width) / 2
+              Y: =shp_cmp_BPFIndicator_Gall_Circle1.Y + 3
+        - shp_cmp_BPFIndicator_Gall_Circle1:
+            Control: Circle
+            Properties:
+              OnSelect: =Select(Parent)
+              BorderColor: =RGBA(0, 18, 107, 1)
+              Fill: |-
+                =If(
+                    ThisItem.ID > ComponentIndicadorProceso.CurrentStage,
+                    ComponentIndicadorProceso.ColorInactive,
+                    ComponentIndicadorProceso.ColorActive
+                )
+              Height: =20
+              Width: =20
+              X: =(Parent.TemplateWidth - Self.Width) / 2
+              Y: =8
+        - shp_cmp_BPFIndicator_Gall_Right:
+            Control: Rectangle
+            Properties:
+              OnSelect: =Select(Parent)
+              BorderColor: =RGBA(0, 18, 107, 1)
+              Fill: |-
+                =If(
+                    ThisItem.ID < ComponentIndicadorProceso.CurrentStage,
+                    ComponentIndicadorProceso.ColorActive,
+                    ComponentIndicadorProceso.ColorInactive
+                )
+              Height: =2
+              Visible: |-
+                =If(
+                    ThisItem.ID = Last(ComponentIndicadorProceso.Items).ID,
+                    false,
+                    true
+                )
+              Width: =Parent.TemplateWidth / 2
+              X: =Parent.TemplateWidth / 2
+              Y: =17
+        - shp_cmp_BPFIndicator_Gall_Left:
+            Control: Rectangle
+            Properties:
+              OnSelect: =Select(Parent)
+              BorderColor: =RGBA(0, 18, 107, 1)
+              Fill: |-
+                =If(
+                    ThisItem.ID > ComponentIndicadorProceso.CurrentStage,
+                    ComponentIndicadorProceso.ColorInactive,
+                    ComponentIndicadorProceso.ColorActive
+                )
+              Height: =2
+              Visible: |-
+                =If(
+                    ThisItem.ID = First(ComponentIndicadorProceso.Items).ID,
+                    false,
+                    true
+                )
+              Width: =Parent.TemplateWidth / 2
+              Y: =17
+    CustomProperties:
+    - ColorActive:
+        Direction: Input
+        PropertyType: Data
+        DataType: Color
+        IsResettable: false
+        DisplayName: ColorActive
+        Description: The color used for the current or a previous stage.
+    - ColorInactive:
+        Direction: Input
+        PropertyType: Data
+        DataType: Color
+        IsResettable: false
+        DisplayName: ColorInactive
+        Description: The color used for a next stage.
+    - CurrentStage:
+        Direction: Input
+        PropertyType: Data
+        DataType: Number
+        IsResettable: false
+        DisplayName: CurrentStage
+        Description: The number of the current stage. Numbering starts at 1.
+    - Items:
+        Direction: Input
+        PropertyType: Data
+        DataType: Table
+        IsResettable: false
+        DisplayName: Items
+        Description: The items.
+    - TextColor:
+        Direction: Input
+        PropertyType: Data
+        DataType: Color
+        IsResettable: false
+        DisplayName: TextColor
+        Description: The color of the text.
+    - TextFont:
+        Direction: Input
+        PropertyType: Data
+        DataType: String
+        IsResettable: false
+        DisplayName: TextFont
+        Description: The font of the text.
