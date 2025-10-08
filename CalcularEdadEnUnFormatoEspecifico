@@ -1,0 +1,51 @@
+Calcular edad  en el siguiente formato : Resultado => Tu edad: 17 años, 7 meses, 28 días
+a partir de un control de calendario
+--============================================================================
+Set(
+    FechaNacimientoSeleccionada;
+    DateValue(
+        Text(
+            dtpFechaNacimineto_New.SelectedDate;
+            "[$-es-ES]dd/mm/yyyy"
+        )
+    )
+);;
+// Calcular la diferencia total en días desde la fecha de nacimiento hasta hoy
+Set(
+    EdadTotalDias;
+    DateDiff(
+        Now();
+        FechaNacimientoSeleccionada;
+        TimeUnit.Days
+    )
+);;
+// Calcular años completos
+Set(
+    Anios;
+    RoundDown(
+        EdadTotalDias / 365;
+        0
+    )
+);;
+// Calcular meses completos
+Set(
+    Meses;
+    RoundDown(
+        Mod(
+            EdadTotalDias / 30,4375;
+            12
+        );
+        0
+    )
+);;
+// Calcular días restantes después de restar los años y meses completos
+Set(
+    Dias;
+    RoundDown(
+        Mod(
+            EdadTotalDias;
+            30,4375
+        );
+        0
+    )
+)
