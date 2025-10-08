@@ -1,0 +1,17 @@
+Search(
+    SortByColumns(
+        LastN(
+            Filter(
+                Establecimientos;
+                'Estado' = drpEstadoLista.Selected.Value && 'TipoEstablecimiento' = "Facturado"
+            );
+           200
+        );
+        "Created";
+        SortOrder.Descending
+    );
+    txtBuscadoro.Text;
+    "Establecimiento";
+    "CodigoSolicitud";
+    "Planta"
+)
