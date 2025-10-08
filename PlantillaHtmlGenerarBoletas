@@ -1,0 +1,89 @@
+"<div style='
+  width: 480px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: Arial, sans-serif;
+  color: #333;
+  padding: 20px;
+'>
+
+  <!-- Encabezado -->
+  <div style='text-align:center; border-bottom:2px solid #f0f0f0; padding-bottom:10px;'>
+    <h2 style='margin:0; color:#2c3e50;'>BOLETA DE VENTA</h2>
+    <p style='margin:2px; font-size:13px; color:#666;'>Fecha: 20/09/2025</p>
+  </div>
+
+  <!-- Datos del cliente -->
+  <div style='margin-top:10px; font-size:14px;'>
+    <p><b>Cliente:</b> Juan Pérez</p>
+    <p><b>Piso:</b> 2 - <b>Mesa:</b> 23</p>
+  </div>
+
+  <!-- Tabla de productos -->
+  <table style='width:100%; border-collapse:collapse; margin-top:10px; font-size:13px;'>
+    <tr style='background:#f8f9fa; text-align:left;'>
+      <th style='padding:8px; border-bottom:1px solid #ddd;'>Descripción</th>
+      <th style='padding:8px; border-bottom:1px solid #ddd;'>Cant.</th>
+      <th style='padding:8px; border-bottom:1px solid #ddd;'>Precio</th>
+      <th style='padding:8px; border-bottom:1px solid #ddd;'>Importe</th>
+    </tr>
+    <tr>
+      <td style='padding:6px; border-bottom:1px solid #eee;'>Ceviche Clásico</td>
+      <td style='padding:6px; text-align:center; border-bottom:1px solid #eee;'>10</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 65.99</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 659.90</td>
+    </tr>
+    <tr>
+      <td style='padding:6px; border-bottom:1px solid #eee;'>Ceviche de Mariscos</td>
+      <td style='padding:6px; text-align:center; border-bottom:1px solid #eee;'>10</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 99.99</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 999.90</td>
+    </tr>
+    <tr>
+      <td style='padding:6px; border-bottom:1px solid #eee;'>Ceviche Tropical</td>
+      <td style='padding:6px; text-align:center; border-bottom:1px solid #eee;'>1</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 100.99</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 100.99</td>
+    </tr>
+    <tr>
+      <td style='padding:6px; border-bottom:1px solid #eee;'>Ceviche de Atún</td>
+      <td style='padding:6px; text-align:center; border-bottom:1px solid #eee;'>5</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 75.99</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 379.95</td>
+    </tr>
+    <tr>
+      <td style='padding:6px; border-bottom:1px solid #eee;'>Ceviche de Langostinos</td>
+      <td style='padding:6px; text-align:center; border-bottom:1px solid #eee;'>1</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 110.99</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 110.99</td>
+    </tr>
+    <tr>
+      <td style='padding:6px; border-bottom:1px solid #eee;'>Ceviche de Trucha</td>
+      <td style='padding:6px; text-align:center; border-bottom:1px solid #eee;'>1</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 65.99</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 65.99</td>
+    </tr>
+    <tr>
+      <td style='padding:6px; border-bottom:1px solid #eee;'>Ceviche con Leche de Tigre</td>
+      <td style='padding:6px; text-align:center; border-bottom:1px solid #eee;'>1</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 129.99</td>
+      <td style='padding:6px; text-align:right; border-bottom:1px solid #eee;'>S/ 129.99</td>
+    </tr>
+  </table>
+
+  <!-- Resumen -->
+  <div style='margin-top:15px; font-size:14px;'>
+    <p style='text-align:right; margin:2px;'><b>Subtotal:</b> S/ 2074.32</p>
+    <p style='text-align:right; margin:2px;'><b>IGV (18%):</b> S/ 373.39</p>
+    <p style='text-align:right; margin:2px; font-size:16px; color:#e67e22;'><b>Total:</b> S/ 2447.71</p>
+  </div>
+
+  <!-- Pie -->
+  <div style='text-align:center; margin-top:10px; font-size:12px; color:#777; border-top:1px solid #eee; padding-top:8px;'>
+    ¡Gracias por su compra!
+  </div>
+
+</div>
+
+"
