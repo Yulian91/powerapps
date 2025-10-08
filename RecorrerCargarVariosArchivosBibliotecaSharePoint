@@ -8,7 +8,8 @@ ForAll(
         {
             file: {
                 name: documents.Name;
-                contentBytes: documents.Value
+                // Enviar el binario como base64 (string JSON) para evitar problemas de encoding
+                contentBytes: JSON(documents.Value; JSONFormat.IncludeBinaryData)
             }
         }
     )
