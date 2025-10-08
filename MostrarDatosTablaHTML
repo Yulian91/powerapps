@@ -1,0 +1,71 @@
+Heders: control HTML
+----------------------------
+"<div style='
+  background-color:  #fec89a;" & ";
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0; 0; 0; 0.1);
+  width: 100%;
+  overflow-x: auto;
+'>
+  <table style='
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial; Helvetica; sans-serif;
+    text-align: center;
+  '>
+    <thead>
+      <tr style='background-color: #f0f0f0; color: #333; Height:55px'>
+        <th>Codigo</th>
+        <th>Descripcion</th>
+        <th>Fecha</th>
+        <th>Direccion</th>
+        <th>Recepcionista</th>
+        <th>Cantidad</th>
+        <th>TipoCobro</th>
+        <th>Importe</th>
+        <th>Importeneto</th>
+        <th>Acciones</th>
+
+      </tr>
+    </thead>
+  </table>
+</div>"
+Galeria :
+---------------------
+"<div style='
+  background-color:" & If(
+    ThisItem.IsSelected;
+    "#fec89a";
+    "#fff"
+) & ";
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0; 0; 0; 0.1);
+  width: 100%;
+  overflow-x: auto;
+'>
+  <table style='
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial; Helvetica; sans-serif;
+    text-align: center;
+  '>
+    <tbody>
+      <tr style='color:" & If(
+    ThisItem.IsSelected;
+    "#E52E04";
+    "#F77C01"
+) & "; Height:55px'>
+        <td>" & ThisItem.Codigo & "</td>
+        <td>" & ThisItem.Descripcion & "</td>
+        <td>" & ThisItem.Fecha & "</td>
+        <td>" & ThisItem.Direccion & "</td>
+        <td>" & ThisItem.Recepcionista & "</td>
+        <td>" & ThisItem.Cantidad & "</td>
+        <td>" & ThisItem.TipoCobro & "</td>
+        <td>" & ThisItem.Importe & "</td>
+        <td>" & ThisItem.Importeneto & "</td>
+        <td>" & ThisItem.Acciones & "</td>
+      </tr>
+    </tbody>
+  </table>
+</div>"
