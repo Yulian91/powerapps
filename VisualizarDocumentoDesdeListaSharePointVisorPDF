@@ -1,0 +1,6 @@
+First(
+    LookUp(
+        Inspectores;
+        Nombre = TextInput1.Text
+    ).Attachments
+).Value
