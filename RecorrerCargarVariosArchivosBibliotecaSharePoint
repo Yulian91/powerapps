@@ -1,0 +1,31 @@
+Recorrer y cargar varios archivos a una biblioteca de sharepoint
+===================================
+OPción A: 
+
+ForAll(
+    DataCardDocs.Attachments As documents;
+    guardarImagenesOTS.Run(
+        {
+            file: {
+                name: documents.Name;
+                contentBytes: documents.Value
+            }
+        }
+    )
+)
+-----------------------------------------------------------------------------------------------------------------------
+Opcion con B-Con parametros 
+=======================
+ ForAll(
+            DataCardCombustibles.Attachments As documents;
+            guardarImagenesOTS.Run(
+                varGetIDCombustible;
+                "Combust";
+                {
+                    file: {
+                        name: documents.Name;
+                        contentBytes: documents.Value
+                    }
+                }
+            )
+        );;
