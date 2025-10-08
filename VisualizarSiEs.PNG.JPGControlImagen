@@ -1,0 +1,21 @@
+If(
+    EndsWith(
+        First(
+            LookUp(
+                Inspectores;
+                Documento = TextInput1.Text
+            ).Attachments
+        ).AbsoluteUri;
+        ".png"
+    ) || EndsWith(
+        First(
+            LookUp(
+                Inspectores;
+                Documento = TextInput1.Text
+            ).Attachments
+        ).AbsoluteUri;
+        ".jpg"
+    );
+    true;
+    false
+)
