@@ -1,0 +1,12 @@
+ClearCollect(
+    colListaBuses;
+    ForAll(
+        Table(ParseJSON(GetListaBuses.Run().respuesta));
+        {
+            Placa: Text(ThisRecord.Value.placa);
+            Peso: Text(ThisRecord.Value.peso);
+            Color: Text(ThisRecord.Value.color)
+ 
+        }
+    )
+)
