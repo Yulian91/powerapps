@@ -1,0 +1,29 @@
+If(
+    IsBlank(Adjunto_Files.Attachments) || IsBlank(First(Adjunto_Files.Attachments).Value);
+    Notify(
+        "Debes adjuntar un archivo Excel";
+        NotificationType.Error
+    );
+    If(
+        Right(
+            First(Adjunto_Files.Attachments).Name;
+            5
+        ) = ".xlsx";
+        Notify(
+            CargaMaestro_Personal.Run(
+                {
+                    file: {
+                        name: First(Adjunto_Files.Attachments).Name;
+                        contentBytes: First(Adjunto_Files.Attachments).Value
+                    }
+                }
+            ).respuesta;
+            NotificationType.Success
+        );;
+        Reset(Adjunto_Files);
+        Notify(
+            "Seleccione un archivo de Excel válido (.xlsx) antes de cargar";
+            NotificationType.Error
+        )
+    )
+)
