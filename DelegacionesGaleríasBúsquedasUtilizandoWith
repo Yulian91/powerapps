@@ -1,0 +1,10 @@
+With(
+    { Activos: Filter(Personas; Estado.Value = "Alta") };
+    Search(
+        Activos;
+        txtBuscar.Text;
+        'Codigo Tutor';
+        Nombres;
+        Apellidos
+    )
+)
