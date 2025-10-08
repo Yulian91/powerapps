@@ -1,0 +1,4 @@
+Set(
+    varNombre;
+    First(BarcodeReader.Barcodes).Value
+)
