@@ -1,0 +1,26 @@
+"<div  style='
+            background-color:" & If(
+    ThisItem.IsSelected;
+    "#fec89a";
+    "#fff"
+) & ";
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+'>
+        <h2  style=' 
+            font-weight: normal;
+            font-style: inherit;
+            font-family: Arial, Helvetica, sans-serif; 
+       color:" & If(
+    ThisItem.IsSelected;
+    "#E52E04";
+    "#F77C01"
+) & " '
+        >" & Concatenate(
+    "Piso Nº ";
+    Proper(ThisItem.ID)
+) & "</h2>
+    </div>"
