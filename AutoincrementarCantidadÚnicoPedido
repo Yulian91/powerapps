@@ -1,0 +1,44 @@
+If(
+    IsBlank(
+        LookUp(
+            detalleEntradas_Salidas;
+            CodProducto = cboProductos_1.Selected.CodProd
+        )
+    );
+    // Si no existe el producto; agregar un nuevo registro
+    Collect(
+        detalleEntradas_Salidas;
+        {
+            Operacion: If(
+                rdaTipoOperacion_1.Selected.Value = "Entrada";
+                "E";
+                "S"
+            );
+            CodProducto: cboProductos_1.Selected.CodProd;
+            Producto: cboProductos_1.Selected.Descripcion;
+            Unidad: cboProductos_1.Selected.Unidad;
+            Cantidad: Value(txtCantidad_1.Text);
+            Comentario: If(
+                IsBlank(txtDescripcion_1.Text);
+                "-";
+                txtDescripcion_1.Text
+            );
+            Fecha: Now();
+            Responsable: User().FullName
+        }
+    );
+    // Si ya existe el producto; actualizar la cantidad
+    Patch(
+        detalleEntradas_Salidas;
+        LookUp(
+            detalleEntradas_Salidas;
+            CodProducto = cboProductos_1.Selected.CodProd
+        );
+        {
+            Cantidad: LookUp(
+                detalleEntradas_Salidas;
+                CodProducto = cboProductos_1.Selected.CodProd
+            ).Cantidad + Value(txtCantidad_1.Text)
+        }
+    )
+)
