@@ -1,0 +1,17 @@
+1). micleccion                      ==> Colección de origen al que s requiere agregar un código
+2). micleccionConNumero ==> Colección que incluye el código
+----------------------------------------------------------------------------------------------------------------------------
+Clear(micleccionConNumero);;
+ForAll(
+    micleccion;
+    Collect(
+        micleccionConNumero;
+        {
+            nombre: nombre;
+            telefono: telefono;
+            direccion: direccion;
+            porcentaje: porcentaje;
+            codigo : CountRows(micleccionConNumero) + 1
+        }
+    )
+);;
