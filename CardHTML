@@ -1,0 +1,44 @@
+"<div style=' 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            margin: 0;
+            width: 425px; 
+            height: 140px; 
+            background:" & If(
+    ThisItem.IsSelected;
+    "#2A2E32";
+    "#121418"
+) & ";
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 6px; 
+            position: relative; 
+            overflow: hidden; 
+            text-align: center;
+            ' 
+            >
+ 
+</div>"
+
+Botón power Apps
+--------------------------------------
+"<div style=' 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 55px;
+            width: 412px;
+            background: linear-gradient(to right, #00C39A, #82C882, #DCCD72);
+            border-radius: 5px;
+            box-shadow: 8px 8px 16px rgba(0,0,0,0.2), -8px -8px 16px rgba(255,255,255,0.5);
+            cursor: pointer; /* Para mostrar que es interactivo */
+            text-align: center; /* Centrar el texto */
+            color: white; /* Color del texto */
+            font-weight: bold; /* Negrita */
+            user-select: none; /* Evitar selección de texto */
+            ' 
+           
+            >
+    <span>Login</span>
+</div>"
